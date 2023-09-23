@@ -222,7 +222,7 @@ module.exports = ({ Class }) => {
     Class.kwamiBase = {
         PARENT: ["genericTank"],
         BODY: body,
-        TEAM: TEAM_KWAMI,
+        TEAM: -111,
         SHAPE: 0,
         LEVEL: 280,
         SKILL_CAP: Array(10).fill(14),
