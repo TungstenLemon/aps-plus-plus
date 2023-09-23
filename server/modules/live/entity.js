@@ -1066,7 +1066,6 @@ class Entity extends EventEmitter {
             this.skill.setCaps(Array(10).fill(0));
             this.skill.setCaps(caps);
             this.isArenaCloser = false;
-            this.ac = false;
             this.alpha = 1;
             this.reset();
         }
