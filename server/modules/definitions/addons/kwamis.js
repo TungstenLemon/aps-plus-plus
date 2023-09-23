@@ -4,27 +4,28 @@
 // "[PARENT ADDON NAME]-[EXTENSION NAME].js", to make sure that it would run after that addon ran.
 
 const { combineStats, makeDeco } = require('../facilitators.js');
+const { base } = require('../constants.js');
 const g = require('../gunvals.js');
-const base = {
-	PARENT: ["genericTank"],
-	BODY: {
-		ACCEL: 1,
-		SPEED: 1.4,
-		HEALTH: 400,
-		DAMAGE: 10,
-		RESIST: 3,
-		PENETRATION: 2,
-		SHIELD: 40,
-		FOV: 1.6,
-		DENSITY: 3,
-	},
-	SHAPE: 0,
-	SIZE: 50,
-	LEVEL: 330,
-	EXTRA_SKILL: 98,
-	SKILL_CAP: [14, 14, 14, 14, 14, 14, 14, 14, 14, 14],
+const _v = 2; // 1 | 2
+const body = {
+    SPEED: base.SPEED * 0.2,
+    HEALTH: base.HEALTH * 15,
+	SHIELD: base.SHIELD * 8,
+	REGEN: base.REGEN * 8,
+    FOV: base.FOV * 1.5,
+	RESIST: base.RESIST * 4,
+	DENSITY: base.DENSITY * 4,
 };
-const makeAbility = (label, color) => {
+const new_body = {
+    HEALTH: base.HEALTH * 10,
+	SHIELD: base.SHIELD * 5,
+	REGEN: base.REGEN * 5,
+    FOV: base.FOV * 1.5,
+	RESIST: base.RESIST * 4,
+	DENSITY: base.DENSITY * 4,
+};
+
+let makeAbility = (label, color) => {
     return {
         PARENT: ["genericTank"],
         LABEL: label + " Ability",
@@ -228,9 +229,19 @@ module.exports = ({ Class }) => {
         ability: io_ability,
     };
 
+    Class.kwamiBase = {
+        PARENT: ["genericTank"],
+        BODY: _v == 1 ? body : new_body,
+        SHAPE: 0,
+        SIZE: 50,
+        LEVEL: 200,
+        EXTRA_SKILL: 60,
+        SKILL_CAP: [14, 14, 14, 14, 14, 14, 14, 14, 14, 14],
+    };
+
 	Class.plaggAbility = makeAbility("plagg", 9);
 	Class.plagg = {
-		PARENT: base,
+		PARENT: ["kwamiBase"],
 		LABEL: "Plagg",
 		CONTROLLERS: [["ability", { type: "damage" }]],
 		COLOR: 11,
@@ -261,7 +272,7 @@ module.exports = ({ Class }) => {
 
 	Class.tikkiAbility = makeAbility("tikki", 5);
 	Class.tikki = {
-		PARENT: base,
+		PARENT: ["kwamiBase"],
 		LABEL: "Tikki",
 		CONTROLLERS: [["ability", { type: "heal" }]],
 		COLOR: 12,
@@ -309,7 +320,7 @@ module.exports = ({ Class }) => {
 
 	Class.noorooAbility = makeAbility("nooroo", 4);
 	Class.nooroo = {
-		PARENT: base,
+		PARENT: ["kwamiBase"],
 		LABEL: "Nooroo",
 		CONTROLLERS: [["ability", { type: "capture" }]],
 		COLOR: 4,
