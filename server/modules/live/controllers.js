@@ -17,6 +17,22 @@ compressMovement = (current, goal) => {
 };
 
 // Define IOs (AI)
+class IO {
+    constructor(body) {
+        this.body = body
+        this.acceptsFromTop = true
+    }
+    think() {
+        return {
+            target: null,
+            goal: null,
+            fire: null,
+            main: null,
+            alt: null,
+            power: null,
+        }
+    }
+}
 class io_bossRushAI extends IO {
     constructor(body) {
         super(body);
@@ -685,7 +701,7 @@ class io_wanderAroundMap extends IO {
     }
 }
 
-let _ioTypes = {
+let ioTypes = {
     //misc
     zoom: io_zoom,
     doNothing: io_doNothing,
@@ -714,4 +730,5 @@ let _ioTypes = {
     fleeAtLowHealth: io_fleeAtLowHealth,
     wanderAroundMap: io_wanderAroundMap,
 };
-ioTypes = Object.assign(ioTypes, _ioTypes);
+
+module.exports = { ioTypes, IO };

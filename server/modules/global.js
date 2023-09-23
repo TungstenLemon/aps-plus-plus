@@ -15,7 +15,6 @@ global.minimap = [];
 global.entities = [];
 global.views = [];
 global.chats = {};
-global.ioTypes = {};
 global.entitiesToAvoid = [];
 global.grid = new hshg.HSHG();
 global.arenaClosed = false;
@@ -79,22 +78,6 @@ global.Tile = class Tile {
         this.tick = tile.tick || (()=>{});
         if ("function" !== typeof this.tick) {
             throw new Error("'tick' property must be a function!");
-        }
-    }
-}
-global.IO = class IO {
-    constructor(body) {
-        this.body = body
-        this.acceptsFromTop = true
-    }
-    think() {
-        return {
-            target: null,
-            goal: null,
-            fire: null,
-            main: null,
-            alt: null,
-            power: null,
         }
     }
 }

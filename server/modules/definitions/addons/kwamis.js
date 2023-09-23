@@ -220,13 +220,13 @@ class io_ability extends IO {
         if (this.ability.timer) this.ability.timer--;
     }
 }
-let _ioTypes = {
-	ability: io_ability,
-};
 
 module.exports = ({ Class }) => {
 
-	ioTypes = Object.assign(ioTypes, _ioTypes);
+	ioTypes = {
+        ...ioTypes,
+        ability: io_ability,
+    };
 
 	Class.plaggAbility = makeAbility("plagg", 9);
 	Class.plagg = {
