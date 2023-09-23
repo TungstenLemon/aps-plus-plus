@@ -301,7 +301,7 @@ function mooncollide(moon, n) {
 }
 
 function reflectCollide(wall, bounce) {
-    if (bounce.god === true || bounce.passive === true || bounce.ac || bounce.master.ac) return;
+    if (bounce.god === true || bounce.passive === true || bounce.isArenaCloser || bounce.master.isArenaCloser) return;
     if (bounce.team === wall.team && bounce.type === "tank") return;
     if (bounce.x + bounce.size < wall.x - wall.size ||
         bounce.x - bounce.size > wall.x + wall.size ||

@@ -1160,8 +1160,6 @@ const eyes = (socket) => {
 let getBarColor = (entry) => {
     if (c.GROUPS) return 11;
     switch (entry.team) {
-        case TEAM_ENEMIES:
-            return entry.color;
         case -1:
             return 10;
         case -2:
@@ -1171,13 +1169,7 @@ let getBarColor = (entry) => {
         case -4:
             return 15;
         default:
-            if (
-                room.gameMode[0] === "2" ||
-                room.gameMode[0] === "3" ||
-                room.gameMode[0] === "4"
-            )
-                return entry.color;
-            return 11;
+            return Number(entry.color.split(" ")[0]);
     }
 };
 

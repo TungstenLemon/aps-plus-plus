@@ -52,6 +52,8 @@ global.TEAM_BROWN = -7;
 global.TEAM_CYAN = -8;
 global.TEAM_ROOM = -100;
 global.TEAM_ENEMIES = -101;
+global.TEAM_DREADS = -102;
+global.TEAM_KWAMI = -103;
 global.getTeamName = team => ["BLUE", "GREEN", "RED", "PURPLE", "YELLOW", "ORANGE", "BROWN", "CYAN"][-team - 1] || "An unknown team";
 global.getTeamColor = team => [10, 11, 12, 15, 25, 26, 27, 28][-team - 1] || 3 + " 0 1 0 false";
 global.isPlayerTeam = team => /*team < 0 && */team > -9;
@@ -84,7 +86,6 @@ global.Tile = class Tile {
 
 // Now that we've set up the global variables, we import all the modules, then put them into global varialbles and then export something just so this file is run.
 const requires = [
-    "./live/class.js", // Class dictionary.
     "./setup/room.js", // These are the basic room functions, set up by config.json
     "./physics/relative.js", // Some basic physics functions that are used across the game.
     "./network/sockets.js", // The networking that helps players interact with the game.
@@ -92,6 +93,7 @@ const requires = [
     "./live/entitySubFunctions.js", // Skill, HealthType and other functions related to entities are here.
     "./live/controllers.js", // The AI of the game.
     "./live/entity.js", // The actual Entity constructor.
+    "./live/class.js", // Class dictionary.
     "./setup/mockups.js", // This file loads the mockups.
     "./physics/collisionFunctions.js", // The actual collision functions that make the game work.
     "./debug/logs.js", // The logging pattern for the game. Useful for pinpointing lag.

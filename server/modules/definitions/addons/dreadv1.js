@@ -24,7 +24,6 @@ const dreadnoughtBody = {
     PENETRATION: 2,
     SHIELD: 40,
     REGEN: 0.025,
-    FOV: 1.5,
     DENSITY: 3,
 };
 
@@ -36,11 +35,16 @@ module.exports = ({ Class }) => {
 	    BODY: dreadnoughtBody,
 	    SHAPE: 6,
 	    COLOR: 9,
-	    SIZE: 50,
-	    LEVEL: 150,
-	    EXTRA_SKILL: 48,
+	    LEVEL: 280,
+		TEAM: TEAM_DREADS,
 	    SKILL_CAP: Array(10).fill(smshskl+3),
 	};
+	if (c.LEVEL_CAP <= 45) {
+		Class.genericDreadnought1.BODY.FOV = 1.5;
+		Class.genericDreadnought1.SIZE = 50;
+		Class.genericDreadnought1.EXTRA_SKILL = 48;
+	}
+
 	Class.mechanismMainTurret = {
 	    PARENT: ["genericTank"],
 	    LABEL: "Turret",

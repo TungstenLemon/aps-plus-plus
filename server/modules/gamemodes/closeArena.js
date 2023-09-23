@@ -21,33 +21,18 @@ function closeArena() {
             y: room.width / 2 + (room.width / 1.5) * Math.sin(angle),
         });
         o.define(Class.arenaCloser);
-        o.define({
-            AI: {
-                FULL_VIEW: true,
-                SKYNET: true,
-                BLIND: true,
-                LIKES_SHAPES: true,
-            },
-            CONTROLLERS: ["nearestDifferentMaster", "mapTargetToGoal"],
-            SKILL: Array(10).fill(9),
-            ACCEPTS_SCORE: false,
-            CAN_BE_ON_LEADERBOARD: false,
-            VALUE: 100000,
-        });
-        o.color = 3;
-        o.team = TEAM_ROOM;
-        o.name = "Arena Closer";
+        o.team = TEAM_ENEMIES;
     }
     let ticks = 0;
     loop = setInterval(() => {
         ticks++;
-        if (ticks >= 20) return close();
+        if (ticks >= 200) return close();
         let alive = false;
         for (let i = 0; i < entities.length; i++) {
             let instance = entities[i];
             if (
-                instance.isPlayer || instance.isMothership ||
-                (instance.isDominator && instance.team !== -101)
+                instance.isMothership || instance.isPlayer ||
+                (instance.isDominator && instance.team !== TEAM_ENEMIES)
             ) {
                 alive = true;
             }

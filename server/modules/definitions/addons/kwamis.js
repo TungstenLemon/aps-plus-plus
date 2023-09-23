@@ -6,21 +6,11 @@
 const { combineStats, makeDeco } = require('../facilitators.js');
 const { base } = require('../constants.js');
 const g = require('../gunvals.js');
-const _v = 2; // 1 | 2
 const body = {
-    SPEED: base.SPEED * 0.2,
+    SPEED: base.SPEED * 0.7,
     HEALTH: base.HEALTH * 15,
 	SHIELD: base.SHIELD * 8,
 	REGEN: base.REGEN * 8,
-    FOV: base.FOV * 1.5,
-	RESIST: base.RESIST * 4,
-	DENSITY: base.DENSITY * 4,
-};
-const new_body = {
-    HEALTH: base.HEALTH * 10,
-	SHIELD: base.SHIELD * 5,
-	REGEN: base.REGEN * 5,
-    FOV: base.FOV * 1.5,
 	RESIST: base.RESIST * 4,
 	DENSITY: base.DENSITY * 4,
 };
@@ -231,13 +221,18 @@ module.exports = ({ Class }) => {
 
     Class.kwamiBase = {
         PARENT: ["genericTank"],
-        BODY: _v == 1 ? body : new_body,
+        BODY: body,
+        TEAM: TEAM_KWAMI,
         SHAPE: 0,
-        SIZE: 50,
-        LEVEL: 200,
-        EXTRA_SKILL: 60,
-        SKILL_CAP: [14, 14, 14, 14, 14, 14, 14, 14, 14, 14],
+        LEVEL: 280,
+        SKILL_CAP: Array(10).fill(14),
     };
+    if (c.LEVEL_CAP > 45) Class.kwamiBase.EXTRA_SKILL = 12;
+    else {
+        Class.kwamiBase.BODY.FOV = 1.5;
+        Class.kwamiBase.SIZE = 50;
+        Class.kwamiBase.EXTRA_SKILL = 60;
+    }
 
 	Class.plaggAbility = makeAbility("plagg", 9);
 	Class.plagg = {

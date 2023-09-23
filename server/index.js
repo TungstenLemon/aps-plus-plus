@@ -57,8 +57,8 @@ function collide(collision) {
     }
     if (
         (!instance.activation.check() && !other.activation.check()) ||
-        (instance.ac && !instance.alpha) ||
-        (other.ac && !other.alpha)
+        (instance.isArenaCloser && !instance.alpha) ||
+        (other.isArenaCloser && !other.alpha)
     ) return 0;
     switch (true) {
         case instance.type === "wall" || other.type === "wall":
@@ -66,7 +66,7 @@ function collide(collision) {
             if (instance.type === "aura" || other.type === "aura") return;
             let wall = instance.type === "wall" ? instance : other;
             let entity = instance.type === "wall" ? other : instance;
-            if (entity.ac || entity.master.ac) return;
+            if (entity.isArenaCloser || entity.master.isArenaCloser) return;
             switch (wall.shape) {
                 case 4:
                     reflectCollide(wall, entity);
@@ -582,7 +582,7 @@ class FoodType {
         }
         this.types = types;
         this.chances = chances;
-        this.chance *= (scale > 4 && c.SHINY_SCALE) ? c.SHINY_SCALE * 20 : 1; // 20 = 2000 / 100
+        this.chance = chance * (scale > 4 && c.SHINY_SCALE) ? c.SHINY_SCALE * 20 : 1; // 20 = 2000 / 100
         this.isNestFood = isNestFood;
     }
     choose() {

@@ -19,6 +19,7 @@ exports.menu = {
         dfltskl,
     ],
     IGNORED_BY_AI: true,
+    RESET_UPGRADES: true,
     TURRETS: [],
     GUNS: [
         {
@@ -795,7 +796,13 @@ exports['Team' + TEAM_ENEMIES] = {
     COLOR: 3,
     LABEL: "Enemies Team"
 };
-exports.teams.UPGRADES_TIER_0.push('Team' + TEAM_ROOM, 'Team' + TEAM_ENEMIES);
+exports['Team' + TEAM_DREADS] = {
+    PARENT: ["teams"],
+    TEAM: TEAM_DREADS,
+    COLOR: 9,
+    LABEL: "Dreadnoughts Team"
+};
+exports.teams.UPGRADES_TIER_0.push('Team' + TEAM_ROOM, 'Team' + TEAM_ENEMIES, 'Team' + TEAM_DREADS);
 
 // DEV "UPGRADE PATHS"
 exports.developer.UPGRADES_TIER_0 = ["basic", "healer", "spectator", "miscEntities", "eggGenerator", "bosses", "fun", "levels", "teams"];

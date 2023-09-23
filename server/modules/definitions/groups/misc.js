@@ -704,10 +704,20 @@ exports.arenaCloser = {
         FOV: 10,
         SPEED: 8,
     },
+    AI: {
+        FULL_VIEW: true,
+        SKYNET: true,
+        BLIND: true,
+        LIKES_SHAPES: true,
+    },
     SKILL: skillSet({ rld: 1, dam: 1, pen: 1, str: 1, spd: 1, atk: 1, hlt: 1, shi: 1, rgn: 1, mob: 1 }),
     DRAW_HEALTH: false,
-    HITS_OWN_TYPE: "never",
     ARENA_CLOSER: true,
+    ACCEPTS_SCORE: false,
+    CAN_BE_ON_LEADERBOARD: false,
+    HITS_OWN_TYPE: "never",
+    CONTROLLERS: ["nearestDifferentMaster", "mapTargetToGoal"],
+    VALUE: 100000,
     GUNS: [{
         POSITION: [14, 10, 1, 0, 0, 0, 0],
         PROPERTIES: {

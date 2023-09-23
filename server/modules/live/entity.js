@@ -18,7 +18,7 @@ function setNatural(natural, type) {
 let lerp = (a, b, x) => a + x * (b - a);
 class Gun {
     constructor(body, info) {
-        this.ac = false;
+        this.isArenaCloser = false;
         this.lastShot = { time: 0, power: 0 };
         this.body = body;
         this.master = body.source;
@@ -1034,18 +1034,13 @@ class Entity extends EventEmitter {
             this.squiggle = this.settings.variesInSize ? ran.randomRange(0.8, 1.2) : 1;
         }
         if (set.RESET_UPGRADES) {
-            let caps = this.skill.caps.map(x=>x);
-            this.skill.setCaps(Array(10).fill(0));
-            this.skill.setCaps(caps);
+            this.reset();
+            this.skill.reset();
             this.upgrades = [];
             this.isArenaCloser = false;
-            this.ac = false;
             this.alpha = 1;
         }
-        if (set.ARENA_CLOSER != null) {
-            this.isArenaCloser = set.ARENA_CLOSER;
-            this.ac = set.ARENA_CLOSER;
-        }
+        if (set.ARENA_CLOSER != null) this.isArenaCloser = set.ARENA_CLOSER;
         for (let i = 0; i < c.MAX_UPGRADE_TIER; i++) {
             let tierProp = 'UPGRADES_TIER_' + i;
             if (set[tierProp] != null) {
