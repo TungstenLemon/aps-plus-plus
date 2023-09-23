@@ -5030,7 +5030,7 @@ function addAura(damageFactor = 1, sizeFactor = 1, auraColor) {
 exports.testbedBase = {
     PARENT: [exports.genericTank],
     LABEL: "",
-    RESET_UPGRADES: true,
+    RESET_STATS: true,
     SKILL_CAP: [
         dfltskl,
         dfltskl,

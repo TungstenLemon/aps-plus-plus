@@ -19,7 +19,6 @@ exports.menu = {
         dfltskl,
     ],
     IGNORED_BY_AI: true,
-    RESET_UPGRADES: true,
     TURRETS: [],
     GUNS: [
         {
@@ -518,7 +517,7 @@ exports.trplnrsTestTank = {
     PARENT: ['genericTank'],
     LABEL: "Trplnr's Test Tank",
     COLOR: 'teal',
-    RESET_UPGRADES: true,
+    RESET_STATS: true,
     GUNS: [
     {
         POSITION: [18, 10, 0.75, -5, 0, 0, 0],
