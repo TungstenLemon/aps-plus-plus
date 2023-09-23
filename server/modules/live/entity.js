@@ -26,6 +26,9 @@ class Gun {
         this.label = "";
         this.controllers = [];
         this.children = [];
+        // Stored Variables
+        this.store = {}
+        // ----------------
         this.control = {
             target: new Vector(0, 0),
             goal: new Vector(0, 0),
@@ -340,7 +343,12 @@ class Gun {
         o.coreSize = o.SIZE;
 
         if (this.onFire != null) {
-            this.onFire({body: this.master.master, gun: this})
+            this.onFire({
+                body: this.master.master,
+                gun: this,
+                masterStore: this.master.master.store,
+                gunStore: this.store
+            });
         }
     }
     bulletInit(o) {
@@ -796,6 +804,8 @@ class Entity extends EventEmitter {
         this.team = this.id;
         this.team = master.team;
         this.turnAngle = 0;
+        // Stored Variables
+        this.store = {}
         // This is for collisions
         this.AABB_data = {};
         this.AABB_savedSize = 0;
@@ -1050,13 +1060,15 @@ class Entity extends EventEmitter {
             this.settings.variesInSize = set.VARIES_IN_SIZE;
             this.squiggle = this.settings.variesInSize ? ran.randomRange(0.8, 1.2) : 1;
         }
-        if (set.RESET_UPGRADES) {
+        if (set.RESET_UPGRADE_MENU) this.upgrades = []
+        if (set.RESET_STATS) {
             let caps = this.skill.caps.map(x=>x);
             this.skill.setCaps(Array(10).fill(0));
             this.skill.setCaps(caps);
-            this.reset();
             this.isArenaCloser = false;
+            this.ac = false;
             this.alpha = 1;
+            this.reset();
         }
         if (set.ARENA_CLOSER != null) this.isArenaCloser = set.ARENA_CLOSER;
         for (let i = 0; i < c.MAX_UPGRADE_TIER; i++) {
