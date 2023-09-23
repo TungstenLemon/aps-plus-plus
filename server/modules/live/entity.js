@@ -1060,14 +1060,14 @@ class Entity extends EventEmitter {
             this.settings.variesInSize = set.VARIES_IN_SIZE;
             this.squiggle = this.settings.variesInSize ? ran.randomRange(0.8, 1.2) : 1;
         }
-        if (set.RESET_UPGRADES || set.RESET_STATS) {
+        if (set.RESET_STATS) {
             let caps = this.skill.caps.map(x=>x);
             this.skill.setCaps(Array(10).fill(0));
             this.skill.setCaps(caps);
             this.upgrades = [];
+            this.reset();
             this.isArenaCloser = false;
             this.alpha = 1;
-            this.reset();
         }
         if (set.RESET_UPGRADE_MENU) this.upgrades = [];
         if (set.ARENA_CLOSER != null) this.isArenaCloser = set.ARENA_CLOSER;
