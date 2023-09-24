@@ -897,8 +897,12 @@ class Entity extends EventEmitter {
         }
         // So we start with my master's thoughts and then we filter them down through our control stack
         for (let i = 0; i < this.controllers.length; i++) {
-            let AI = this.controllers[i],
-                a = AI.think(b);
+            let AI = this.controllers[i]
+            if (Array.isArray(AI) && AI.length == 0) {
+                this.controllers.splice(i, 1);
+                continue;
+            }
+            let a = AI.think(b);
             if (a != null) {
                 if (a.target != null && (b.target == null || AI.acceptsFromTop)) b.target = a.target;
                 if (a.goal   != null && (b.goal   == null || AI.acceptsFromTop)) b.goal   = a.goal  ;
@@ -1040,7 +1044,18 @@ class Entity extends EventEmitter {
         if (set.CAN_BE_ON_LEADERBOARD != null) this.settings.leaderboardable = set.CAN_BE_ON_LEADERBOARD;
         if (set.INTANGIBLE != null) this.intangibility = set.INTANGIBLE;
         if (set.IS_SMASHER != null) this.settings.reloadToAcceleration = set.IS_SMASHER;
-        if (set.STAT_NAMES != null) this.settings.skillNames = set.STAT_NAMES;
+        if (set.STAT_NAMES != null) this.settings.skillNames = {
+            body_damage: set.STAT_NAMES?.BODY_DAMAGE ?? 'Body Damage',
+            max_health: set.STAT_NAMES?.MAX_HEALTH ?? 'Max Health',
+            bullet_speed: set.STAT_NAMES?.BULLET_SPEED ?? 'Bullet Speed',
+            bullet_health: set.STAT_NAMES?.BULLET_HEALTH ?? 'Bullet Health',
+            bullet_pen: set.STAT_NAMES?.BULLET_PEN ?? 'Bullet Penetration',
+            bullet_damage: set.STAT_NAMES?.BULLET_DAMAGE ?? 'Bullet Damage',
+            reload: set.STAT_NAMES?.RELOAD ?? 'Reload',
+            move_speed: set.STAT_NAMES?.MOVE_SPEED ?? 'Movement Speed',
+            shield_regen: set.STAT_NAMES?.SHIELD_REGEN ?? 'Shield Regeneration',
+            shield_cap: set.STAT_NAMES?.SHIELD_CAP ?? 'Shield Capacity',
+        };
         if (set.AI != null) this.aiSettings = set.AI;
         if (set.INVISIBLE != null) this.invisible = set.INVISIBLE;
         if (set.ALPHA != null) {
