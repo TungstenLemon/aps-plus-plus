@@ -412,6 +412,7 @@ exports.colorMan = {
 
 exports.miscTestHelper2 = {
     PARENT: ["genericTank"],
+    LABEL: "Turret Reload Test 3",
     TURRET_FACES_CLIENT: true,
     COLOR: -1,
     GUNS: [
@@ -427,6 +428,7 @@ exports.miscTestHelper2 = {
 };
 exports.miscTestHelper = {
     PARENT: ["genericTank"],
+    LABEL: "Turret Reload Test 2",
     TURRET_FACES_CLIENT: true,
     COLOR: {
         BASE: -1,
@@ -632,7 +634,7 @@ exports.switcheroo = {
         PROPERTIES: {
             SHOOT_SETTINGS: combineStats([g.basic]),
             TYPE: 'bullet',
-            ON_FIRE: ({ body, masterStore: store }) => {
+            ON_FIRE: ({ body, globalMasterStore: store }) => {
                 store.switcheroo_i ??= 0;
                 store.switcheroo_i++;
                 store.switcheroo_i %= 6;

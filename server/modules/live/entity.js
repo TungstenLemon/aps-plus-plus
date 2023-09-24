@@ -27,6 +27,7 @@ class Gun {
         this.controllers = [];
         this.children = [];
         // Stored Variables
+        this.globalStore = {}
         this.store = {}
         // ----------------
         this.control = {
@@ -347,7 +348,9 @@ class Gun {
                 body: this.master.master,
                 gun: this,
                 masterStore: this.master.master.store,
-                gunStore: this.store
+                gunStore: this.store,
+                globalMasterStore: this.master.master.globalStore,
+                globalGunStore: this.globalStore
             });
         }
     }
@@ -666,6 +669,7 @@ class StatusEffect extends EventEmitter {
         this.density = getValidated(multipliers, 'density', 'number', labelThing);
         this.stealth = getValidated(multipliers, 'stealth', 'number', labelThing);
         this.pushability = getValidated(multipliers, 'pushability', 'number', labelThing);
+        this.recoilReceived = getValidated(multipliers, 'recoilReceived', 'number', labelThing);
         this.size = getValidated(multipliers, 'size', 'number', labelThing);
         this.tick = getValidated({tick}, 'tick', 'function', "StatusEffect's argument");
     }
@@ -805,6 +809,7 @@ class Entity extends EventEmitter {
         this.team = master.team;
         this.turnAngle = 0;
         // Stored Variables
+        this.globalStore = {}
         this.store = {}
         // This is for collisions
         this.AABB_data = {};
@@ -956,6 +961,10 @@ class Entity extends EventEmitter {
     }
     define(set) {
         set = ensureIsClass(set);
+        this.store = {}
+        for (let gun of this.guns) {
+            gun.store = {}
+        }
 
         if (set.PARENT != null) {
             if (Array.isArray(set.PARENT)) {
@@ -1142,7 +1151,7 @@ class Entity extends EventEmitter {
             if (set.BODY.FOV != null) this.FOV = set.BODY.FOV;
             if (set.BODY.RANGE != null) this.RANGE = set.BODY.RANGE;
             if (set.BODY.SHOCK_ABSORB != null) this.SHOCK_ABSORB = set.BODY.SHOCK_ABSORB;
-            if (set.BODY.RECOIL_MULTIPLIER != null) this.recoilMultiplier = set.BODY.RECOIL_MULTIPLIER;
+            if (set.BODY.RECOIL_MULTIPLIER != null) this.RECOIL_MULTIPLIER = set.BODY.RECOIL_MULTIPLIER;
             if (set.BODY.DENSITY != null) this.DENSITY = set.BODY.DENSITY;
             if (set.BODY.STEALTH != null) this.STEALTH = set.BODY.STEALTH;
             if (set.BODY.PUSHABILITY != null) this.PUSHABILITY = set.BODY.PUSHABILITY;
@@ -1186,7 +1195,8 @@ class Entity extends EventEmitter {
             densityMultiplier = 1,
             stealthMultiplier = 1,
             pushabilityMultiplier = 1,
-            sizeMultiplier = 1;
+            sizeMultiplier = 1,
+            recoilReceivedMultiplier = 1;
         for (let i = 0; i < this.statusEffects.length; i++) {
             let effect = this.statusEffects[i].effect;
             if (effect.acceleration != null) accelerationMultiplier *= effect.acceleration;
@@ -1201,6 +1211,7 @@ class Entity extends EventEmitter {
             if (effect.density != null) densityMultiplier *= effect.density;
             if (effect.stealth != null) stealthMultiplier *= effect.stealth;
             if (effect.pushability != null) pushabilityMultiplier *= effect.pushability;
+            if (effect.recoilReceived != null) recoilReceivedMultiplier *= effect.recoilReceived;
             if (effect.size != null) sizeMultiplier *= effect.size;
         }
 
@@ -1220,6 +1231,7 @@ class Entity extends EventEmitter {
         this.stealth = stealthMultiplier * this.STEALTH;
         this.pushability = pushabilityMultiplier * this.PUSHABILITY;
         this.sizeMultiplier = sizeMultiplier;
+        this.recoilMultiplier = this.RECOIL_MULTIPLIER * recoilReceivedMultiplier;
     }
     bindToMaster(position, bond) {
         this.bond = bond;
@@ -1469,6 +1481,7 @@ class Entity extends EventEmitter {
                 this.y = ref.y + ref.size * bound.offset * Math.sin(bound.direction + bound.angle + ref.facing);
                 ref.velocity.x += bound.size * this.accel.x * ref.recoilMultiplier;
                 ref.velocity.y += bound.size * this.accel.y * ref.recoilMultiplier;
+                this.velocity = ref.velocity;
                 this.firingArc = [ref.facing + bound.angle, bound.arc / 2];
                 this.accel.null();
                 this.blend = ref.blend;
