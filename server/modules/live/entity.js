@@ -897,12 +897,8 @@ class Entity extends EventEmitter {
         }
         // So we start with my master's thoughts and then we filter them down through our control stack
         for (let i = 0; i < this.controllers.length; i++) {
-            let AI = this.controllers[i]
-            if (Array.isArray(AI) && AI.length == 0) {
-                this.controllers.splice(i, 1);
-                continue;
-            }
-            let a = AI.think(b);
+            let AI = this.controllers[i],
+                a = AI.think(b);
             if (a != null) {
                 if (a.target != null && (b.target == null || AI.acceptsFromTop)) b.target = a.target;
                 if (a.goal   != null && (b.goal   == null || AI.acceptsFromTop)) b.goal   = a.goal  ;
@@ -1163,8 +1159,8 @@ class Entity extends EventEmitter {
             if (set.BODY.REGEN != null) this.REGEN = set.BODY.REGEN;
             if (set.BODY.DAMAGE != null) this.DAMAGE = set.BODY.DAMAGE;
             if (set.BODY.PENETRATION != null) this.PENETRATION = set.BODY.PENETRATION;
-            if (set.BODY.FOV != null) this.FOV = set.BODY.FOV;
             if (set.BODY.RANGE != null) this.RANGE = set.BODY.RANGE;
+            if (set.BODY.FOV != null) this.FOV = set.BODY.FOV;
             if (set.BODY.SHOCK_ABSORB != null) this.SHOCK_ABSORB = set.BODY.SHOCK_ABSORB;
             if (set.BODY.RECOIL_MULTIPLIER != null) this.RECOIL_MULTIPLIER = set.BODY.RECOIL_MULTIPLIER;
             if (set.BODY.DENSITY != null) this.DENSITY = set.BODY.DENSITY;
@@ -1174,6 +1170,7 @@ class Entity extends EventEmitter {
             this.refreshBodyAttributes();
         }
         if (set.SPAWN_ON_DEATH) this.spawnOnDeath = set.SPAWN_ON_DEATH;
+        if (set.REROOT_UPGRADE_TREE) this.rerootUpgradeTree = set.REROOT_UPGRADE_TREE;
         if (set.TURRETS != null) {
             for (let i = 0; i < this.turrets.length; i++) {
                 this.turrets[i].destroy();
@@ -1522,7 +1519,7 @@ class Entity extends EventEmitter {
         this.accel.y += engine.y * this.control.power;
     }
     reset(keepPlayerController = true) {
-        this.controllers = [keepPlayerController ? this.controllers.filter(con => con instanceof ioTypes.listenToPlayer)[0] : []];
+        this.controllers = keepPlayerController ? [this.controllers.filter(con => con instanceof ioTypes.listenToPlayer)[0]] : [];
     }
     face() {
         let t = this.control.target,
@@ -1571,7 +1568,8 @@ class Entity extends EventEmitter {
                 break;
             case "bound":
                 let givenangle,
-                    reduceIndependence = false;
+                    reduceIndependence = false,
+                    slowness = this.settings.turretFacesClient ? 1 : 4 / roomSpeed;
                 if (this.control.main) {
                     givenangle = Math.atan2(t.y, t.x);
                     let diff = util.angleDifference(givenangle, this.firingArc[0]);
@@ -1594,7 +1592,7 @@ class Entity extends EventEmitter {
                         this.perceptionAngleIndependence = 1;
                     }
                 }
-                this.facing += util.loopSmooth(this.facing, givenangle, 4 / roomSpeed);
+                this.facing += util.loopSmooth(this.facing, givenangle, slowness);
                 break;
         }
         this.facing += this.turnAngle;

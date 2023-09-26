@@ -61,6 +61,7 @@ exports.genericEntity = {
     MAX_CHILDREN: 0,
     BORDERLESS: false,
     DRAW_FILL: true,
+    REROOT_UPGRADE_TREE: false,
     BODY: {
         ACCELERATION: 1,
         SPEED: 0,
@@ -72,6 +73,8 @@ exports.genericEntity = {
         PENETRATION: 1,
         RANGE: 0,
         FOV: 1,
+        SHOCK_ABSORB: 1,
+        RECOIL_MULTIPLIER: 1,
         DENSITY: 1,
         STEALTH: 1,
         PUSHABILITY: 1,
