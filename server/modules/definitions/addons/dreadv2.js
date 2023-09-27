@@ -57,7 +57,6 @@ const hexnoughtBody = {
 };
 
 module.exports = ({ Class }) => {
-	return;
 
 	// Misc
 	Class.genericEggnought = {
@@ -66,6 +65,7 @@ module.exports = ({ Class }) => {
 	    SHAPE: 0,
 	    COLOR: 6,
 	    SIZE: 12.5,
+		TEAM: TEAM_DREADS,
 	    SKILL_CAP: Array(10).fill(smshskl),
 	}
 	Class.genericSquarenought = {
