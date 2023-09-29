@@ -1841,10 +1841,10 @@ exports.bentDouble = {
 exports.triplet = {
     PARENT: ["genericTank"],
     DANGER: 6,
+    LABEL: "Triplet",
     BODY: {
         FOV: 1.05 * base.FOV,
     },
-    LABEL: "Triplet",
     GUNS: [
         {
             POSITION: [18, 10, 1, 0, 5, 0, 0.5],
