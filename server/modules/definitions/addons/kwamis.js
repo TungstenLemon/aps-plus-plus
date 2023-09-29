@@ -8,11 +8,12 @@ const { base } = require('../constants.js');
 const g = require('../gunvals.js');
 const body = {
     SPEED: base.SPEED * 0.7,
-    HEALTH: base.HEALTH * 15,
+    HEALTH: base.HEALTH * 100,
 	SHIELD: base.SHIELD * 8,
 	REGEN: base.REGEN * 8,
 	RESIST: base.RESIST * 4,
 	DENSITY: base.DENSITY * 4,
+    FOV: base.FOV * 1.5,
 };
 
 let makeAbility = (label, color) => {
@@ -222,17 +223,13 @@ module.exports = ({ Class }) => {
     Class.kwamiBase = {
         PARENT: ["genericTank"],
         BODY: body,
-        TEAM: -111,
+        TEAM: TEAM_DREADS,
+        SIZE: 30,
+        DANGER: 14,
         SHAPE: 0,
         LEVEL: 280,
         SKILL_CAP: Array(10).fill(14),
     };
-    if (c.LEVEL_CAP > 45) Class.kwamiBase.EXTRA_SKILL = 12;
-    else {
-        Class.kwamiBase.BODY.FOV = 1.5;
-        Class.kwamiBase.SIZE = 50;
-        Class.kwamiBase.EXTRA_SKILL = 60;
-    }
 
 	Class.plaggAbility = makeAbility("plagg", 9);
 	Class.plagg = {
@@ -254,7 +251,7 @@ module.exports = ({ Class }) => {
 					e.push({
 						POSITION: [10, 5, 1, 5, v == 1 ? -2.5 : 2.5, d, 0],
 						PROPERTIES: {
-							SHOOT_SETTINGS: combineStats([g.basic, g.pound, g.destroy, g.doublereload, g.slow]),
+							SHOOT_SETTINGS: combineStats([g.basic, g.pound, g.sniper, g.assass, g.morespeed, g.morereload]),
 							COLOR: 9,
 							TYPE: ["bullet", { COLOR: 11 }],
 						},
@@ -301,7 +298,7 @@ module.exports = ({ Class }) => {
 					let O = {
 						POSITION: [10, 5, 1, 5, v == 1 ? -2.5 : 2.5, d, 0],
 						PROPERTIES: {
-							SHOOT_SETTINGS: combineStats([g.basic, g.pound, g.destroy, g.doublereload, g.slow]),
+							SHOOT_SETTINGS: combineStats([g.basic, g.pound, g.sniper, g.assass, g.morespeed, g.morereload]),
 							COLOR: 9,
 							TYPE: ["bullet", { COLOR: 12 }],
 						},
@@ -333,7 +330,7 @@ module.exports = ({ Class }) => {
 					e.push({
 						POSITION: [10, 5, 1, 5, v == 1 ? -2.5 : 2.5, d, 0],
 						PROPERTIES: {
-							SHOOT_SETTINGS: combineStats([g.basic, g.pound, g.destroy, g.doublereload, g.slow]),
+							SHOOT_SETTINGS: combineStats([g.basic, g.pound, g.sniper, g.assass, g.morespeed, g.morereload]),
 							COLOR: 9,
 							TYPE: ["bullet", { COLOR: 4 }],
 						},

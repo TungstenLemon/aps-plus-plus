@@ -582,7 +582,7 @@ class FoodType {
         }
         this.types = types;
         this.chances = chances;
-        this.chance = chance * (scale > 4 && c.SHINY_SCALE) ? c.SHINY_SCALE * 20 : 1; // 20 = 2000 / 100
+        this.chance = chance * (scale > 4 && c.SHINY_SCALE ? c.SHINY_SCALE * 20 : 1); // 20 = 2000 / 100
         this.isNestFood = isNestFood;
     }
     choose() {

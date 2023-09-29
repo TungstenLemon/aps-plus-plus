@@ -46,6 +46,7 @@ module.exports = ({ Class }) => {
 		Class.genericDreadnought1.SIZE = 50;
 		Class.genericDreadnought1.EXTRA_SKILL = 48;
 	}
+	else Class.genericDreadnought1.BODY.SPEED *= 3;
 
 	Class.mechanismMainTurret = {
 	    PARENT: ["genericTank"],
