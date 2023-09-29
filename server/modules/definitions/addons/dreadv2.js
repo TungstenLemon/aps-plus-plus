@@ -63,6 +63,7 @@ module.exports = ({ Class }) => {
 	Class.genericEggnought = {
 		PARENT: ["genericTank"],
 		BODY: eggnoughtBody,
+		TEAM: TEAM_DREADS,
 	    SHAPE: 0,
 	    COLOR: 6,
 	    SIZE: 12.5,
@@ -72,6 +73,7 @@ module.exports = ({ Class }) => {
 	Class.genericSquarenought = {
 		PARENT: ["genericTank"],
 		BODY: squarenoughtBody,
+		TEAM: TEAM_DREADS,
 	    SHAPE: 4,
 	    COLOR: 13,
 	    SIZE: 15,
@@ -81,6 +83,7 @@ module.exports = ({ Class }) => {
 	Class.genericTrinought = {
 		PARENT: ["genericTank"],
 		BODY: trinoughtBody,
+		TEAM: TEAM_DREADS,
 	    SHAPE: 3.5,
 	    COLOR: 2,
 	    SIZE: 20,
@@ -90,6 +93,7 @@ module.exports = ({ Class }) => {
 	Class.genericPentanought = {
 		PARENT: ["genericTank"],
 		BODY: pentanoughtBody,
+		TEAM: TEAM_DREADS,
 	    SHAPE: 5.5,
 	    COLOR: 14,
 	    SIZE: 25,
@@ -99,6 +103,7 @@ module.exports = ({ Class }) => {
 	Class.genericHexnought = {
 		PARENT: ["genericTank"],
 		BODY: hexnoughtBody,
+		TEAM: TEAM_DREADS,
 	    SHAPE: 6,
 	    COLOR: 0,
 	    SIZE: 30,
